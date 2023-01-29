@@ -1,0 +1,237 @@
+.titlebar-button {
+  background-color: transparent !important;
+  stroke: currentColor !important;
+}
+
+.titlebar-button:hover {
+  background-color: #928374 !important
+}
+
+.titlebar-close:hover {
+  background-color: #cc241d !important
+}
+
+.titlebar-close {
+  list-style-image: url(chrome://browser/skin/window-controls/close.svg) !important
+}
+
+.titlebar-min {
+  list-style-image: url(chrome://browser/skin/window-controls/minimize.svg) !important
+}
+
+.titlebar-max {
+  list-style-image: url(chrome://browser/skin/window-controls/maximize.svg) !important
+}
+
+.titlebar-restore {
+  list-style-image: url(chrome://browser/skin/window-contros/restore.svg) !important
+}
+
+:root:is([tabsintitlebar], [sizemode="fullscreen"]) {
+  --uc-window-control-width: 0px;
+  /* Space reserved for window controls (Win10) */
+  /* Extra space reserved on both sides of the nav-bar to be able to drag the window */
+  --uc-window-drag-space-pre: 0px;
+  /* left side*/
+  --uc-window-drag-space-post: 0px;
+  /* right side*/
+}
+
+:root:is([tabsintitlebar][sizemode="maximized"], [sizemode="fullscreen"]) {
+  --uc-window-drag-space-pre: 0px;
+  /* Remove pre space */
+}
+
+@media (-moz-platform: windows-win7),
+(-moz-platform: windows-win8),
+(-moz-os-version: windows-win7),
+(-moz-os-version: windows-win8) {
+  :root:is([tabsintitlebar], [sizemode="fullscreen"]) {
+    --uc-window-control-width: 0px;
+  }
+}
+
+@media (-moz-gtk-csd-available) {
+  :root:is([tabsintitlebar], [sizemode="fullscreen"]) {
+    --uc-window-control-width: 0px;
+  }
+}
+
+:root[tabsintitlebar] {
+  --uc-toolbar-height: 40px;
+}
+
+:root[tabsintitlebar][uidensity="compact"] {
+  --uc-toolbar-height: 32px
+}
+
+#TabsToolbar {
+  visibility: collapse !important
+}
+
+:root[sizemode="fullscreen"] #TabsToolbar> :is(#window-controls, .titlebar-buttonbox-container) {
+  visibility: visible !important;
+  z-index: 2;
+}
+
+:root:not([inFullscreen]) #nav-bar {
+  margin-top: calc(0px - var(--uc-toolbar-height, 0px));
+}
+
+:root[tabsintitlebar] #toolbar-menubar[autohide="true"] {
+  min-height: unset !important;
+  height: var(--uc-toolbar-height, 0px) !important;
+  position: relative;
+}
+
+#toolbar-menubar[autohide="false"] {
+  margin-bottom: var(--uc-toolbar-height, 0px)
+}
+
+:root[tabsintitlebar] #toolbar-menubar[autohide="true"] #main-menubar {
+  -moz-box-flex: 1;
+  -moz-box-align: stretch;
+  background-color: var(--toolbar-bgcolor, --toolbar-non-lwt-bgcolor);
+  background-clip: padding-box;
+  border-right: 30px solid transparent;
+  border-image: linear-gradient(to left, transparent, var(--toolbar-bgcolor, --toolbar-non-lwt-bgcolor) 30px) 20 / 30px
+}
+
+#toolbar-menubar:not([inactive]) {
+  z-index: 2
+}
+
+#toolbar-menubar[autohide="true"][inactive]>#menubar-items {
+  opacity: 0;
+  pointer-events: none;
+  margin-left: var(--uc-window-drag-space-pre, 0px)
+}
+
+/* Some variables for quick configuration - play with numbers to find a perfect match for your setup */
+:root {
+  --panel-width: 100vw;
+  --panel-hide-offset: -30px;
+  --opacity-when-hidden: 0;
+}
+
+
+/* Auto-hide address bar */
+#navigator-toolbox {
+  position: fixed !important;
+  /* Comment out following line to get 'slide-page-down' reveal, like in F11 fullscreen mode */
+  display: block;
+  transition: margin-top 200ms 33ms ease, opacity 200ms 33ms ease !important;
+  z-index: 2;
+  opacity: 1;
+  /* Disabled the borders, as the bottom one seemed to have unwanted top padding sometimes */
+  border: none !important;
+}
+
+#navigator-toolbox,
+#navigator-toolbox>* {
+  /* Reduced width for panel in order to not overflow the screen on the right side */
+  width: var(--panel-width);
+}
+
+#navigator-toolbox:not(:focus-within):not(:hover) {
+  margin-top: var(--panel-hide-offset);
+  opacity: var(--opacity-when-hidden);
+}
+
+/* Disable auto-hiding when in 'customize' mode */
+:root[customizing] #navigator-toolbox {
+  position: relative !important;
+  opacity: 1 !important;
+  margin-top: 0px;
+}
+
+.titlebar-buttonbox-container {
+  display: none !important;
+}
+
+#TabsToolbar, #sidebar-header {
+  display: none !important;
+}
+
+#sidebar-box {
+  --uc-sidebar-width: 10px;
+  --uc-sidebar-hover-width: 25vw;
+  --uc-autohide-sidebar-delay: 0ms;
+  position: relative;
+  min-width: var(--uc-sidebar-width) !important;
+  max-width: var(--uc-sidebar-width) !important;
+  z-index: 1;
+  transition: all 350ms 33ms ease !important;
+  opacity: 1;
+  border: none !important;
+  margin-right: -10px;
+}
+
+#sidebar-box[positionend] {
+  direction: rtl
+}
+
+#sidebar-box[positionend]>* {
+  direction: ltr
+}
+
+#sidebar-box[positionend]:-moz-locale-dir(rtl) {
+  direction: ltr
+}
+
+#sidebar-box[positionend]:-moz-locale-dir(rtl)>* {
+  direction: rtl
+}
+
+#main-window[sizemode="fullscreen"] #sidebar-box {
+  --uc-sidebar-width: 1px;
+}
+
+#sidebar-splitter {
+  display: none
+}
+
+#sidebar-header {
+  overflow: hidden;
+  color: var(--chrome-color, inherit) !important;
+  padding-inline: 0 !important;
+}
+
+#sidebar-switcher-target {
+  -moz-box-pack: start !important;
+}
+
+#sidebar-header,
+#sidebar {
+  transition: min-width 300ms ease var(--uc-autohide-sidebar-delay), opacity 400ms ease !important;
+  max-width: var(--uc-sidebar-width) !important;
+  min-width: var(--uc-sidebar-width) !important;
+  will-change: min-width;
+  will-change: max-width;
+  opacity: 0;
+  border: none !important;
+  margin-right: 10px !important;;
+}
+
+#sidebar-box:hover>#sidebar-header,
+#sidebar-box:hover>#sidebar {
+  min-width: var(--uc-sidebar-hover-width) !important;
+  transition-delay: 0ms !important;
+  opacity: 1;
+  border: none !important;
+}
+
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel {
+  inset-inline: auto 0px !important;
+}
+
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel-label {
+  margin-inline: 0px !important;
+  border-left-style: solid !important;
+}
+
+.urlbar-container
+{
+  direction: flex;
+}
+
