@@ -1,7 +1,7 @@
 # firefox.css
 <strong>Dependencies:</strong></br>
 <ul>
-<li> Any vertical tabs extension</br> </li>
+<li> Any vertical tabs extension on the right side</br> </li>
 <li><a href="https://github.com/YS-Wong/Adaptive-Tab-Bar-Color">Adaptive-Tab-Bar-Color</a></li>
 </ul>
 
